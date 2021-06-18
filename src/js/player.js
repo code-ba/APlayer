@@ -102,9 +102,8 @@ class APlayer {
                 this.currentTime = initPlayer.time;
                 initPlayer.play = false;
                 initPlayer.status = 'play';
-                this.list.switch(initPlayer.index);
+                initPlayer.index !== this.list.index && this.list.switch(initPlayer.index);
                 localStorage.setItem('isPlayer', JSON.stringify(initPlayer));
-
                 this.options.autoplay = true;
             }
         }
@@ -537,7 +536,7 @@ class APlayer {
                     } else {
                         isPlayer.play = false;
                         isPlayer.status = 'play';
-                        this.list.switch(isPlayer.index);
+                        isPlayer.index !== this.list.index && this.list.switch(isPlayer.index);
                         setTimeout(function () {
                             _this.audio.currentTime = isPlayer.time;
                             _this.play();
