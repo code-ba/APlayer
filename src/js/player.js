@@ -114,7 +114,7 @@ class APlayer {
                 setTimeout(() => {
                     this.audio.currentTime = this.currentTime;
                     this.play();
-                }, 600);
+                }, 2000);
             } else {
                 this.play();
             }
@@ -522,7 +522,7 @@ class APlayer {
                         time: _this.audio.currentTime,
                         status: 'unload',
                         index: _this.list.index,
-                        flag: true,
+                        flag: 3,
                     })
                 );
             }
@@ -533,7 +533,7 @@ class APlayer {
                 isPlayer = JSON.parse(isPlayer);
                 if (isPlayer.play && isPlayer.status === 'unload') {
                     if (isPlayer.flag) {
-                        isPlayer.flag = false;
+                        isPlayer.flag--;
                     } else {
                         isPlayer.play = false;
                         isPlayer.status = 'play';
@@ -541,12 +541,12 @@ class APlayer {
                         setTimeout(function () {
                             _this.audio.currentTime = isPlayer.time;
                             _this.play();
-                        }, 600);
+                        }, 1000);
                     }
                     localStorage.setItem('isPlayer', JSON.stringify(isPlayer));
                 }
             }
-        }, 1200);
+        }, 1000);
     }
 }
 
