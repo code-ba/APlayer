@@ -95,12 +95,33 @@ class APlayer {
             this.list.switch(0);
         }
 
+        let initPlayer = localStorage.getItem('isPlayer');
+        if (initPlayer !== null) {
+            initPlayer = JSON.parse(initPlayer);
+            if (location.href === initPlayer.page && initPlayer.play && initPlayer.status === 'unload') {
+                this.currentTime = initPlayer.time;
+                initPlayer.play = false;
+                initPlayer.status = 'play';
+                this.list.switch(initPlayer.index);
+                localStorage.setItem('isPlayer', JSON.stringify(initPlayer));
+
+                this.options.autoplay = true;
+            }
+        }
         // autoplay
         if (this.options.autoplay) {
-            this.play();
+            if (this.currentTime) {
+                setTimeout(() => {
+                    this.audio.currentTime = this.currentTime;
+                    this.play();
+                }, 60);
+            } else {
+                this.play();
+            }
         }
 
         instances.push(this);
+        this.isCloseWindowPage();
     }
 
     initAudio() {
@@ -485,6 +506,47 @@ class APlayer {
     static get version() {
         /* global APLAYER_VERSION */
         return APLAYER_VERSION;
+    }
+
+    // 监听页面关闭事件
+    isCloseWindowPage() {
+        const _this = this;
+        window._this = _this;
+        window.addEventListener('unload', function () {
+            if (_this.paused === false) {
+                localStorage.setItem(
+                    'isPlayer',
+                    JSON.stringify({
+                        play: true,
+                        page: location.href,
+                        time: _this.audio.currentTime,
+                        status: 'unload',
+                        index: _this.list.index,
+                        flag: true,
+                    })
+                );
+            }
+        });
+        setInterval(() => {
+            let isPlayer = localStorage.getItem('isPlayer');
+            if (isPlayer !== null) {
+                isPlayer = JSON.parse(isPlayer);
+                if (isPlayer.play && isPlayer.status === 'unload') {
+                    if (isPlayer.flag) {
+                        isPlayer.flag = false;
+                    } else {
+                        isPlayer.play = false;
+                        isPlayer.status = 'play';
+                        this.list.switch(isPlayer.index);
+                        setTimeout(function () {
+                            _this.audio.currentTime = isPlayer.time;
+                            _this.play();
+                        }, 60);
+                    }
+                    localStorage.setItem('isPlayer', JSON.stringify(isPlayer));
+                }
+            }
+        }, 100);
     }
 }
 

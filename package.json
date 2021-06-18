@@ -1,6 +1,6 @@
 {
-    "name": "aplayer",
-    "version": "1.10.1",
+    "name": "aplayer2",
+    "version": "0.0.2",
     "description": "Wow, such a beautiful html5 music player",
     "main": "dist/APlayer.min.js",
     "style": "dist/APlayer.min.css",
@@ -17,7 +17,7 @@
         "dist"
     ],
     "repository": {
-        "url": "git+https://github.com/DIYgod/APlayer.git",
+        "url": "git+https://github.com/code-ba/APlayer.git",
         "type": "git"
     },
     "keywords": [
@@ -28,12 +28,12 @@
     "gitHooks": {
         "pre-commit": "npm run format:staged"
     },
-    "author": "DIYgod",
+    "author": "Baran",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/DIYgod/APlayer/issues"
+        "url": "https://github.com/code-ba/APlayer/issues"
     },
-    "homepage": "https://github.com/DIYgod/APlayer#readme",
+    "homepage": "https://github.com/code-ba/APlayer#readme",
     "devDependencies": {
         "@babel/core": "^7.6.0",
         "@babel/preset-env": "^7.4.5",
