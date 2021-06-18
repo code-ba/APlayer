@@ -114,7 +114,7 @@ class APlayer {
                 setTimeout(() => {
                     this.audio.currentTime = this.currentTime;
                     this.play();
-                }, 60);
+                }, 600);
             } else {
                 this.play();
             }
@@ -541,12 +541,12 @@ class APlayer {
                         setTimeout(function () {
                             _this.audio.currentTime = isPlayer.time;
                             _this.play();
-                        }, 60);
+                        }, 600);
                     }
                     localStorage.setItem('isPlayer', JSON.stringify(isPlayer));
                 }
             }
-        }, 100);
+        }, 1200);
     }
 }
 
