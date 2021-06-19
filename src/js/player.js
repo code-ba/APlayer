@@ -521,7 +521,7 @@ class APlayer {
                         time: _this.audio.currentTime,
                         status: 'unload',
                         index: _this.list.index,
-                        flag: 3,
+                        flag: 66,
                     })
                 );
             }
@@ -545,7 +545,7 @@ class APlayer {
                     localStorage.setItem('isPlayer', JSON.stringify(isPlayer));
                 }
             }
-        }, 1000);
+        }, 50);
     }
 }
 
