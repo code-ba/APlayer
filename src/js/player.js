@@ -113,7 +113,7 @@ class APlayer {
                 setTimeout(() => {
                     this.audio.currentTime = this.currentTime;
                     this.play();
-                }, 2000);
+                }, 2500);
             } else {
                 this.play();
             }
