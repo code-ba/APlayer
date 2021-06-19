@@ -101,19 +101,36 @@ class APlayer {
             if (location.href === initPlayer.page && initPlayer.play && initPlayer.status === 'unload') {
                 this.currentTime = initPlayer.time;
                 initPlayer.play = false;
+                if (initPlayer.status === 'close') {
+                    this.playTimer = 2000;
+                } else {
+                    this.playTimer = 3000;
+                }
                 initPlayer.status = 'play';
                 initPlayer.index !== this.list.index && this.list.switch(initPlayer.index);
                 localStorage.setItem('isPlayer', JSON.stringify(initPlayer));
                 this.options.autoplay = true;
             }
         }
+
+        /*
+        let status = "reload";
+        let flag = 66;
+        if (pageLoadFlag) {
+            status = "close";
+            flag = 0;
+        */
         // autoplay
         if (this.options.autoplay) {
             if (this.currentTime) {
-                setTimeout(() => {
+                // setTimeout(() => {
+                // }, this.playTimer / 2);
+                // setTimeout(() => {
+                // }, this.playTimer);
+                window.addEventListener('load', () => {
                     this.audio.currentTime = this.currentTime;
                     this.play();
-                }, 2500);
+                });
             } else {
                 this.play();
             }
@@ -511,26 +528,38 @@ class APlayer {
     isCloseWindowPage() {
         const _this = this;
         window._this = _this;
+        let pageLoadFlag = 0;
+        window.onbeforeunload = function () {
+            setTimeout(function () {
+                let status = 'reload';
+                let flag = 66;
+                if (pageLoadFlag) {
+                    status = 'close';
+                    flag = 0;
+                }
+                if (_this.paused === false) {
+                    localStorage.setItem(
+                        'isPlayer',
+                        JSON.stringify({
+                            play: true,
+                            page: location.href,
+                            time: _this.audio.currentTime,
+                            status: status,
+                            index: _this.list.index,
+                            flag: flag,
+                        })
+                    );
+                }
+            });
+        };
         window.addEventListener('unload', function () {
-            if (_this.paused === false) {
-                localStorage.setItem(
-                    'isPlayer',
-                    JSON.stringify({
-                        play: true,
-                        page: location.href,
-                        time: _this.audio.currentTime,
-                        status: 'unload',
-                        index: _this.list.index,
-                        flag: 66,
-                    })
-                );
-            }
+            pageLoadFlag++;
         });
         setInterval(() => {
             let isPlayer = localStorage.getItem('isPlayer');
             if (isPlayer !== null) {
                 isPlayer = JSON.parse(isPlayer);
-                if (isPlayer.play && isPlayer.status === 'unload') {
+                if (isPlayer.play && isPlayer.status !== 'play') {
                     if (isPlayer.flag) {
                         isPlayer.flag--;
                     } else {
