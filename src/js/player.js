@@ -101,11 +101,6 @@ class APlayer {
             if (location.href === initPlayer.page && initPlayer.play && initPlayer.status === 'unload') {
                 this.currentTime = initPlayer.time;
                 initPlayer.play = false;
-                if (initPlayer.status === 'close') {
-                    this.playTimer = 2000;
-                } else {
-                    this.playTimer = 3000;
-                }
                 initPlayer.status = 'play';
                 initPlayer.index !== this.list.index && this.list.switch(initPlayer.index);
                 localStorage.setItem('isPlayer', JSON.stringify(initPlayer));
@@ -129,7 +124,9 @@ class APlayer {
                 // }, this.playTimer);
                 window.addEventListener('load', () => {
                     this.audio.currentTime = this.currentTime;
-                    this.play();
+                    setTimeout(() => {
+                        this.play();
+                    }, 50);
                 });
             } else {
                 this.play();
