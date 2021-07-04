@@ -1,3 +1,12 @@
+---
+
+## 在原基础上增加功能
+- 正在播放音乐的页面关闭后，其它页面会自动播放
+- 当前浏览器打开了一个页面并且在播放音乐，关闭页面，下次访问改站点会自动播放音乐
+- 正在播放音乐的页面跳转后，会继续播放音乐
+
+---
+
 <p align="center">
 <img src="https://ws4.sinaimg.cn/large/006tKfTcgy1fhu01y9uy7j305k04s3yc.jpg" alt="ADPlayer" width="100">
 </p>
